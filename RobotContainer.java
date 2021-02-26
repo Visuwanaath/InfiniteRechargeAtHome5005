@@ -36,9 +36,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller1,4).whileHeld(new Shoot(m_shooter));
-    new JoystickButton(controller1,3).whileHeld(new Feed(m_feeder));
-    new JoystickButton(controller1,2).whileHeld(new Load(m_loader));
+    new JoystickButton(controller1,4).whileHeld(new Shoot(m_shooter,()->1));
+    new JoystickButton(controller1,3).whileHeld(new Feed(m_feeder,()->1));
+    new JoystickButton(controller1,2).whileHeld(new Load(m_loader,()->1));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

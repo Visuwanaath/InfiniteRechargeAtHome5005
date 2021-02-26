@@ -6,12 +6,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
+import java.util.function.DoubleSupplier;
 public class Feed extends CommandBase {
   private Feeder m_feeder;
+  private DoubleSupplier m_speed;
   /** Creates a new Feed. */
-  public Feed(Feeder subsystem) {
+  public Feed(Feeder subsystem,DoubleSupplier speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_feeder = subsystem;
+    m_speed = speed;
     addRequirements(m_feeder);
   }
 
@@ -22,7 +25,7 @@ public class Feed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.feed(()->1);
+    m_feeder.feed(m_speed);
   }
 
   // Called once the command ends or is interrupted.

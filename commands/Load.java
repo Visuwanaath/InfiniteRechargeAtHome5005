@@ -6,11 +6,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Loader;
+import java.util.function.DoubleSupplier;
 public class Load extends CommandBase {
   private Loader m_Loader;
+  private DoubleSupplier m_speed;
   /** Creates a new Load. */
-  public Load(Loader subsystem) {
+  public Load(Loader subsystem,DoubleSupplier speed) {
     m_Loader = subsystem;
+    m_speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Loader);
   }
@@ -22,7 +25,7 @@ public class Load extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Loader.load(()->1);
+    m_Loader.load(m_speed);
   }
 
   // Called once the command ends or is interrupted.
