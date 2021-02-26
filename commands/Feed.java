@@ -22,13 +22,13 @@ public class Feed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.feed();
+    m_feeder.feed(()->1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_feeder.stopFeed();
+    m_feeder.feed(()->0);
   }
 
   // Returns true when the command should end.

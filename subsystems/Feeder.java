@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Spark;
 import frc.robot.Constants;
+import java.util.function.DoubleSupplier;
 public class Feeder extends SubsystemBase {
   /** Creates a new Feeder. */
   public Feeder() {}
@@ -14,10 +15,7 @@ public class Feeder extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void feed(){
-    feeder.set(1);
-  }
-  public void stopFeed(){
-    feeder.set(0);
+  public void feed(DoubleSupplier speed){
+    feeder.set(speed.getAsDouble());
   }
 }
