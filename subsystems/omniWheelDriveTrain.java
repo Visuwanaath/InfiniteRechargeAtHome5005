@@ -50,4 +50,23 @@ public class omniWheelDriveTrain extends SubsystemBase {
       west.set(Y * 1);
     }
   }
+  public void driveByAngle(DoubleSupplier angleSupplier,DoubleSupplier speedSupplier){
+    double angle = angleSupplier.getAsDouble();
+    double speed = speedSupplier.getAsDouble();
+    double rotAngle = angle + 45;
+    rotAngle = Math.toRadians(rotAngle);
+    double Y = Math.sin(rotAngle) * speed;
+    double X = Math.cos(rotAngle) * speed;
+    north.set(X);
+    east.set(Y);
+    south.set(X);
+    west.set(Y);
+  }
+  public void rotate(DoubleSupplier speed){
+    double Rot = speed.getAsDouble();
+      north.set(Rot);
+      east.set(Rot);
+      south.set(Rot);
+      west.set(Rot);
+  }
 }
