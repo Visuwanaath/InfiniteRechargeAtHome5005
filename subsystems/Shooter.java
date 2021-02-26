@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Spark;
 import frc.robot.Constants;
+import java.util.function.DoubleSupplier;
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
   public Shooter() {}
@@ -16,12 +17,8 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void shoot(){
-    leftShooter.set(-0.6 * -1);
-    rightShooter.set(0.6);
-  }
-  public void stopShoot(){
-    leftShooter.set(0);
-    rightShooter.set(0);
+  public void shoot(DoubleSupplier speed){
+    leftShooter.set(speed.getAsDouble());
+    rightShooter.set(speed.getAsDouble());
   }
 }

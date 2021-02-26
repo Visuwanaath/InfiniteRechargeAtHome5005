@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Spark;
 import frc.robot.Constants;
+import java.util.function.DoubleSupplier;
 public class Loader extends SubsystemBase {
   /** Creates a new Loader. */
   public Loader() {}
@@ -15,10 +16,7 @@ public class Loader extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void load(){
-    loader.set(-1);
-  }
-  public void stopLoad(){
-    loader.set(0);
+  public void load(DoubleSupplier speed){
+    loader.set(speed.getAsDouble());
   }
 }
