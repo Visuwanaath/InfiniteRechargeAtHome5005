@@ -38,15 +38,15 @@ public class omniWheelDriveTrain extends SubsystemBase {
     X = Math.cos(rotAngle) * hypotenuse;
     //System.out.println("X: " + X);
     //System.out.println("Y: " + Y);
-    if(Math.abs(Rot) > 0.1){
+    if(Math.abs(Rot) > 0.5){
       north.set(Rot);
       east.set(Rot);
       south.set(Rot);
       west.set(Rot);
     }else{
-      north.set(X* -1);
-      east.set(Y * -1);
-      south.set(X * -1);
+      north.set(X* 1);
+      east.set(Y * 1);
+      south.set(X * 1);
       west.set(Y * 1);
     }
   }
