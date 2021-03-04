@@ -19,6 +19,6 @@ public class Shooter extends SubsystemBase {
   }
   public void shoot(DoubleSupplier speed){
     leftShooter.set(speed.getAsDouble());
-    rightShooter.set(speed.getAsDouble());
+    rightShooter.set(-1*speed.getAsDouble());
   }
 }

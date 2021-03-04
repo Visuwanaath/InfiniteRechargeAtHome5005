@@ -4,17 +4,15 @@
 
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Feeder;
-import java.util.function.DoubleSupplier;
-public class Feed extends CommandBase {
-  private Feeder m_feeder;
-  private DoubleSupplier m_speed;
-  /** Creates a new Feed. */
-  public Feed(Feeder subsystem,DoubleSupplier speed) {
+import frc.robot.subsystems.IMU;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+public class readIMU extends CommandBase {
+  IMU m_IMU;
+  /** Creates a new readIMU. */
+  public readIMU(IMU subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_feeder = subsystem;
-    m_speed = speed;
-    addRequirements(m_feeder);
+    m_IMU = subsystem;
+    addRequirements(m_IMU);
   }
 
   // Called when the command is initially scheduled.
@@ -24,13 +22,15 @@ public class Feed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_feeder.feed(m_speed);
+    SmartDashboard.putNumber("Value",m_IMU.getValue());
+    SmartDashboard.putNumber("X Value",m_IMU.getXValue());
+    SmartDashboard.putNumber("Y Angle",m_IMU.getYValue());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_feeder.feed(()->0);
+    
   }
 
   // Returns true when the command should end.

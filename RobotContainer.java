@@ -22,13 +22,15 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Feeder m_feeder = new Feeder();
   private final Loader m_loader = new Loader();
+  private final IMU m_IMU = new IMU();
   private Joystick controller1 = new Joystick(0);
   private Joystick controller2 = new Joystick(1);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    m_omniWheelDriveTrain.setDefaultCommand(new defaultDrive(m_omniWheelDriveTrain,()->controller2.getRawAxis(0),()->controller2.getRawAxis(1),()->controller1.getRawAxis(2)));
+    m_omniWheelDriveTrain.setDefaultCommand(new defaultDrive(m_omniWheelDriveTrain,()->controller2.getRawAxis(0),()->controller2.getRawAxis(1),()->controller2.getRawAxis(2)));
+    m_IMU.setDefaultCommand(new readIMU(m_IMU));
   }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -37,9 +39,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller2,3).whileHeld(new Shoot(m_shooter,()->0.60));
-    new JoystickButton(controller2,2).whileHeld(new Feed(m_feeder,()->0.3));
-    new JoystickButton(controller2,1).whileHeld(new Load(m_loader,()->-1));
+    new JoystickButton(controller2,1).whileHeld(new Shoot(m_shooter,()->0.60));
+    new JoystickButton(controller2,2).whileHeld(new Feed(m_feeder,()->-0.3));
+    new JoystickButton(controller2,3).whileHeld(new Load(m_loader,()->-1));
+    new JoystickButton(controller2,4).whenReleased(new LoopyCourse(m_omniWheelDriveTrain,m_IMU));
+    new JoystickButton(controller2,5).whileHeld(new rotateToAngle(m_IMU, m_omniWheelDriveTrain, ()->45));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

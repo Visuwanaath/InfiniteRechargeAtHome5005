@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Spark;
 import frc.robot.Constants;
@@ -39,15 +38,16 @@ public class omniWheelDriveTrain extends SubsystemBase {
     //System.out.println("X: " + X);
     //System.out.println("Y: " + Y);
     if(Math.abs(Rot) > 0.5){
+      Rot=0.3;
       north.set(Rot);
       east.set(Rot);
       south.set(Rot);
       west.set(Rot);
     }else{
-      north.set(X* 1);
+      north.set(X* -1);
       east.set(Y * 1);
       south.set(X * 1);
-      west.set(Y * 1);
+      west.set(Y * -1);
     }
   }
   public void driveByAngle(DoubleSupplier angleSupplier,DoubleSupplier speedSupplier){
@@ -57,10 +57,10 @@ public class omniWheelDriveTrain extends SubsystemBase {
     rotAngle = Math.toRadians(rotAngle);
     double Y = Math.sin(rotAngle) * speed;
     double X = Math.cos(rotAngle) * speed;
-    north.set(X);
+    north.set(X*-1);
     east.set(Y);
     south.set(X);
-    west.set(Y);
+    west.set(Y*-1);
   }
   public void rotate(DoubleSupplier speed){
     double Rot = speed.getAsDouble();

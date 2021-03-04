@@ -13,10 +13,10 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static int northOmniWheelPWM = 5;
-    public static int eastOmniWheelPWM = 4;
-    public static int southOmniWheelPWM = 6;
-    public static int westOmniWheelPWM = 7;
+    public static int northOmniWheelPWM = 4;
+    public static int eastOmniWheelPWM = 5;
+    public static int southOmniWheelPWM = 7;
+    public static int westOmniWheelPWM = 6;
     public static int shooterLeft =0;
     public static int shooterRight =1;
     public static int feederPWM = 2;
