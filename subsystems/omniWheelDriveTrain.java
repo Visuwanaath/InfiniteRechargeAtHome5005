@@ -5,9 +5,11 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.Constants;
 import java.util.function.DoubleSupplier;
 import java.lang.Math;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class omniWheelDriveTrain extends SubsystemBase {
   /** Creates a new omniWheelDriveTrain. */
   public omniWheelDriveTrain() {}
@@ -15,8 +17,13 @@ public class omniWheelDriveTrain extends SubsystemBase {
   private Spark east = new Spark(Constants.eastOmniWheelPWM);
   private Spark south = new Spark(Constants.southOmniWheelPWM);
   private Spark west = new Spark(Constants.westOmniWheelPWM);
+  private Encoder northEncoder = new Encoder(0,1);
+  private Encoder westEncoder = new Encoder(2,3);
   @Override
-  public void periodic() {}
+  public void periodic() {
+    SmartDashboard.putNumber("North Wheel", northEncoder.getDistance());
+    SmartDashboard.putNumber("West Wheel", westEncoder.getDistance());
+  }
   public void Go(DoubleSupplier xSupplier,DoubleSupplier ySupplier,DoubleSupplier rotSupplier){
     double X = xSupplier.getAsDouble();
     double Y = ySupplier.getAsDouble() * -1;
