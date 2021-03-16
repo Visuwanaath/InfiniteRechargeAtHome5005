@@ -32,29 +32,49 @@ public class driveByEncoders extends CommandBase {
     if(m_angle.getAsDouble() == 90){
       double speed = 0.4;
       double error = m_drivetrainSubsystem.getEncoderDistance(1) - m_drivetrainSubsystem.getEncoderDistance(3);
+      SmartDashboard.putNumber("Encoder Drive Error", error);
       error = error/2000;
       double southSpeed = speed*-1 - error;
       m_drivetrainSubsystem.setSpeedsRaw(()->speed,()->0,()->southSpeed,()->0);
     }else if(m_angle.getAsDouble() == 180){
       double speed = -0.35;
+      double speed2 = 0.35;
       double error = m_drivetrainSubsystem.getEncoderDistance(2) - m_drivetrainSubsystem.getEncoderDistance(4)*-1;
       SmartDashboard.putNumber("Encoder Drive Error", error);
       error = error/1000;
-      double eastSpeed = speed + error;
+      double eastSpeed = speed2 + error;
       m_drivetrainSubsystem.setSpeedsRaw(()->0,()->speed,()->0,()->eastSpeed);
+    }else if(m_angle.getAsDouble() == 0){
+      double speed = 0.35;
+      double speed2 = -0.35;
+      double error = m_drivetrainSubsystem.getEncoderDistance(2) - m_drivetrainSubsystem.getEncoderDistance(4)*-1;
+      SmartDashboard.putNumber("Encoder Drive Error", error);
+      error = error/1000;
+      double eastSpeed = speed2 + error;
+      m_drivetrainSubsystem.setSpeedsRaw(()->0,()->speed,()->0,()->eastSpeed);
+    }else if(m_angle.getAsDouble() == 270){
+      double speed = -0.35;
+      double error = m_drivetrainSubsystem.getEncoderDistance(1) - m_drivetrainSubsystem.getEncoderDistance(3);
+      SmartDashboard.putNumber("Encoder Drive Error", error);
+      error = error/2000;
+      double southSpeed = speed*-1 - error;
+      m_drivetrainSubsystem.setSpeedsRaw(()->speed,()->0,()->southSpeed,()->0);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_drivetrainSubsystem.setSpeedsRaw(()->0, ()->0, ()->0, ()->0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     if(m_angle.getAsDouble() == 0){
-        return false;
+      if(Math.abs(m_drivetrainSubsystem.getEncoderDistance(4)) >= m_counts.getAsDouble()){
+        return true;
+      }
     }else if(m_angle.getAsDouble() == 90){
       if(Math.abs(m_drivetrainSubsystem.getEncoderDistance(1)) >= m_counts.getAsDouble()){
         return true;
@@ -64,7 +84,9 @@ public class driveByEncoders extends CommandBase {
         return true;
       }
     }else if(m_angle.getAsDouble() == 270){
-        return false;
+      if(Math.abs(m_drivetrainSubsystem.getEncoderDistance(1)) >= m_counts.getAsDouble()){
+        return true;
+      }
     }
       return false;
   }

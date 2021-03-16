@@ -70,7 +70,7 @@ public class omniWheelDriveTrain extends SubsystemBase {
     if(Y>0 && X<0){
       rotAngle = rotAngle + 180;
     }
-    System.out.println("Angle: " + rotAngle);
+    //System.out.println("Angle: " + rotAngle);
     rotAngle = rotAngle + 45;
     rotAngle = Math.toRadians(rotAngle);
     double hypotenuse = Math.sqrt(X*X + Y*Y);
