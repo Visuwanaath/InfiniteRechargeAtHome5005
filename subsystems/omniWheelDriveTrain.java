@@ -18,11 +18,45 @@ public class omniWheelDriveTrain extends SubsystemBase {
   private Spark south = new Spark(Constants.southOmniWheelPWM);
   private Spark west = new Spark(Constants.westOmniWheelPWM);
   private Encoder northEncoder = new Encoder(0,1);
+  private Encoder eastEncoder = new Encoder(6,7);
+  private Encoder southEncoder = new Encoder(4,5);
   private Encoder westEncoder = new Encoder(2,3);
   @Override
   public void periodic() {
     SmartDashboard.putNumber("North Wheel", northEncoder.getDistance());
+    SmartDashboard.putNumber("East Wheel", eastEncoder.getDistance());
+    SmartDashboard.putNumber("South Wheel", southEncoder.getDistance());
     SmartDashboard.putNumber("West Wheel", westEncoder.getDistance());
+  }
+  public double getEncoderDistance(int encoderNumberSupplier){
+    int encoderNumber = encoderNumberSupplier;
+    if(encoderNumber == 1){
+      return northEncoder.getDistance();
+    }else if(encoderNumber == 2){
+      return eastEncoder.getDistance();
+    }else if(encoderNumber == 3){
+      return southEncoder.getDistance();
+    }else{
+      return westEncoder.getDistance();
+    }
+  }
+  public double getEncoderSpeed(int encoderNumberSupplier){
+    int encoderNumber = encoderNumberSupplier;
+    if(encoderNumber == 1){
+      return northEncoder.getRate();
+    }else if(encoderNumber == 2){
+      return eastEncoder.getRate();
+    }else if(encoderNumber == 3){
+      return southEncoder.getRate();
+    }else{
+      return westEncoder.getRate();
+    }
+  }
+  public void resetEncoders(){
+    northEncoder.reset();
+    eastEncoder.reset();
+    southEncoder.reset();
+    westEncoder.reset();
   }
   public void Go(DoubleSupplier xSupplier,DoubleSupplier ySupplier,DoubleSupplier rotSupplier){
     double X = xSupplier.getAsDouble();
@@ -45,7 +79,11 @@ public class omniWheelDriveTrain extends SubsystemBase {
     //System.out.println("X: " + X);
     //System.out.println("Y: " + Y);
     if(Math.abs(Rot) > 0.5){
-      Rot=0.3;
+      if(Rot >0){
+        Rot = 0.3;
+      }else{
+        Rot = -0.3;
+      }
       north.set(Rot);
       east.set(Rot);
       south.set(Rot);
@@ -75,5 +113,11 @@ public class omniWheelDriveTrain extends SubsystemBase {
       east.set(Rot);
       south.set(Rot);
       west.set(Rot);
+  }
+  public void setSpeedsRaw(DoubleSupplier northSupplier,DoubleSupplier eastSupplier, DoubleSupplier southSupplier, DoubleSupplier westSupplier){
+    north.set(northSupplier.getAsDouble());
+    east.set(eastSupplier.getAsDouble());
+    south.set(southSupplier.getAsDouble());
+    west.set(westSupplier.getAsDouble());
   }
 }

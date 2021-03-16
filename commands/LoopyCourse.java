@@ -16,15 +16,55 @@ public class LoopyCourse extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      //forward is 90
-      new autoDrive(driveTrainSubsystem, ()->90, ()->0.6).withTimeout(4)
+      //forward is 90 //forward is 90
+      new driveByEncoders(driveTrainSubsystem, ()->90,()-> 6000),
+      //new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->0),
+      new driveByEncoders(driveTrainSubsystem, ()->180,()-> 8000),
+      new autoDrive(driveTrainSubsystem, ()->0, ()->0).withTimeout(0.4),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->0),
+      new resetEncoders(driveTrainSubsystem),
+      new driveByEncoders(driveTrainSubsystem, ()->90,()-> 19300)
+      //new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->180),
+      //new resetEncoders(driveTrainSubsystem),
+      //new driveByEncoders(driveTrainSubsystem, ()->180,()-> 8000),
+      //new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->0)
+      //new driveWithRawValues(driveTrainSubsystem, ()->0, ()->0, ()->0, ()->0)
+      //new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->0)
+      //new autoDrive(driveTrainSubsystem, ()->0, ()->0).withTimeout(1),
+      //new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(5),
+      //new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(1)
       //new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-90),
-      //new autoDrive(driveTrainSubsystem, ()->90, ()->0.6).withTimeout(1.5),
-      //new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-180),
-      //new autoDrive(driveTrainSubsystem, ()->90, ()->0.6).withTimeout(1.5),
-      //new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-270),
-      //new autoDrive(driveTrainSubsystem, ()->90, ()->0.6).withTimeout(1.5),
-      //new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-360)
+      //new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(2.1),
+      //new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->0),
+      //new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(1.5),
+      //new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->80),
+      /*new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(2.5),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->180),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(2.4),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-90),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(2.4),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-180),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(0.9),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-165),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(0.9),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-165),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(0.9),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-165),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(0.9),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-165),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(0.9),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-165),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(0.9),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-165),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(0.9),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-170),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(0.5),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-170),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-270),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(1.75),
+      new rotateToAngle(IMUsubsystem,driveTrainSubsystem, ()->-190),
+      new autoDrive(driveTrainSubsystem, ()->90, ()->0.5).withTimeout(2.2)
+      */
       //new autoDrive(driveTrainSubsystem, ()->110, ()->0.5).withTimeout(4.25),
       //new autoDrive(driveTrainSubsystem, ()->90, ()->0.8).withTimeout(1.3)
       //new autoDrive(driveTrainSubsystem, ()->90, ()->0.8).withTimeout(0.8),
