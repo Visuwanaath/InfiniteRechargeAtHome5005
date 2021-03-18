@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -24,6 +25,7 @@ public class RobotContainer {
   private final Loader m_loader = new Loader();
   private Joystick controller1 = new Joystick(0);
   private Joystick controller2 = new Joystick(1);
+  private final Command eightCourse =new LoopyCourse(m_omniWheelDriveTrain);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -48,4 +50,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+  public Command getAutonomousCommand() {
+    return eightCourse;
+  }
 }
