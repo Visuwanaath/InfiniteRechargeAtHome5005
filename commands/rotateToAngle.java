@@ -6,22 +6,17 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.omniWheelDriveTrain;
-import frc.robot.subsystems.IMU;
 import java.util.function.DoubleSupplier;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class rotateToAngle extends CommandBase {
   private omniWheelDriveTrain m_drivetrainSubsystem;
-  private IMU m_IMU;
   private DoubleSupplier m_angle;
   private boolean endNow = false;
 
   /** Creates a new rotateToAngle. */
-  public rotateToAngle(IMU IMUsubsystem,omniWheelDriveTrain drivetrainSubsystem,DoubleSupplier angle) {
-    m_IMU = IMUsubsystem;
+  public rotateToAngle(omniWheelDriveTrain drivetrainSubsystem,DoubleSupplier angle) {
     m_drivetrainSubsystem = drivetrainSubsystem;
     m_angle = angle;
     // Use addRequirements() here to declare subsystem dependencies.
-   addRequirements(m_IMU);
    addRequirements(m_drivetrainSubsystem); 
   }
 
@@ -32,10 +27,9 @@ public class rotateToAngle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("Value",m_IMU.getValue());
-    if(m_IMU.getValue() < m_angle.getAsDouble() -1){
+    if(m_drivetrainSubsystem.getValue() < m_angle.getAsDouble() -1){
       m_drivetrainSubsystem.rotate(()->-0.2);
-    }else if(m_IMU.getValue() > m_angle.getAsDouble() +1){
+    }else if(m_drivetrainSubsystem.getValue() > m_angle.getAsDouble() +1){
       m_drivetrainSubsystem.rotate(()->0.2);
     }else{
       endNow = true;
@@ -45,13 +39,13 @@ public class rotateToAngle extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drivetrainSubsystem.rotate(()->0);
+    m_drivetrainSubsystem.Go(()->0, ()->0,()->0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_IMU.getValue() == m_angle.getAsDouble() || endNow == true){
+    if(m_drivetrainSubsystem.getValue() == m_angle.getAsDouble() || endNow == true){
       return true;
     }else{
       return false;

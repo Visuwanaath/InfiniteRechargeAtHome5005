@@ -9,10 +9,12 @@ import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.Constants;
 import java.util.function.DoubleSupplier;
 import java.lang.Math;
+import com.analog.adis16470.frc.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class omniWheelDriveTrain extends SubsystemBase {
   /** Creates a new omniWheelDriveTrain. */
   public omniWheelDriveTrain() {}
+  private final ADIS16470_IMU m_imu = new ADIS16470_IMU();
   private Spark north = new Spark(Constants.northOmniWheelPWM);
   private Spark east = new Spark(Constants.eastOmniWheelPWM);
   private Spark south = new Spark(Constants.southOmniWheelPWM);
@@ -27,6 +29,7 @@ public class omniWheelDriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("East Wheel", eastEncoder.getDistance());
     SmartDashboard.putNumber("South Wheel", southEncoder.getDistance());
     SmartDashboard.putNumber("West Wheel", westEncoder.getDistance());
+    SmartDashboard.putNumber("Angle",m_imu.getAngle());
   }
   public double getEncoderDistance(int encoderNumberSupplier){
     int encoderNumber = encoderNumberSupplier;
@@ -39,6 +42,18 @@ public class omniWheelDriveTrain extends SubsystemBase {
     }else{
       return westEncoder.getDistance();
     }
+  }
+  public double getValue(){
+    return m_imu.getAngle();
+  }
+  public double getXValue(){
+    return m_imu.getXComplementaryAngle();
+  }
+  public double getYValue(){
+    return m_imu.getYComplementaryAngle();
+  }
+  public void resetGyro(){
+    m_imu.reset();
   }
   public double getEncoderSpeed(int encoderNumberSupplier){
     int encoderNumber = encoderNumberSupplier;

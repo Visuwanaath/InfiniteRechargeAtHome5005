@@ -34,8 +34,11 @@ public class driveByEncoders extends CommandBase {
       double error = m_drivetrainSubsystem.getEncoderDistance(1) - m_drivetrainSubsystem.getEncoderDistance(3);
       SmartDashboard.putNumber("Encoder Drive Error", error);
       error = error/2000;
+      //if gyro +, slow down north
+      double gyroError = m_drivetrainSubsystem.getValue();
       double southSpeed = speed*-1 - error;
-      m_drivetrainSubsystem.setSpeedsRaw(()->speed,()->0,()->southSpeed,()->0);
+      double northSpeed = speed - gyroError/20;
+      m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->0,()->southSpeed,()->0);
     }else if(m_angle.getAsDouble() == 180){
       double speed = -0.35;
       double speed2 = 0.35;
@@ -43,22 +46,30 @@ public class driveByEncoders extends CommandBase {
       SmartDashboard.putNumber("Encoder Drive Error", error);
       error = error/1000;
       double eastSpeed = speed2 + error;
-      m_drivetrainSubsystem.setSpeedsRaw(()->0,()->speed,()->0,()->eastSpeed);
+      //Gyro +, west slow down
+      double gyroError = m_drivetrainSubsystem.getValue();
+      double westSpeed = speed + gyroError/20;
+      m_drivetrainSubsystem.setSpeedsRaw(()->0,()->westSpeed,()->0,()->eastSpeed);
     }else if(m_angle.getAsDouble() == 0){
       double speed = 0.35;
       double speed2 = -0.35;
       double error = m_drivetrainSubsystem.getEncoderDistance(2) - m_drivetrainSubsystem.getEncoderDistance(4)*-1;
       SmartDashboard.putNumber("Encoder Drive Error", error);
-      error = error/1000;
       double eastSpeed = speed2 + error;
-      m_drivetrainSubsystem.setSpeedsRaw(()->0,()->speed,()->0,()->eastSpeed);
+      error = error/1000;//Gyro +, west speed up
+      double gyroError = m_drivetrainSubsystem.getValue();
+      double westSpeed = speed + gyroError/20;
+      m_drivetrainSubsystem.setSpeedsRaw(()->0,()->westSpeed,()->0,()->eastSpeed);
     }else if(m_angle.getAsDouble() == 270){
       double speed = -0.35;
       double error = m_drivetrainSubsystem.getEncoderDistance(1) - m_drivetrainSubsystem.getEncoderDistance(3);
       SmartDashboard.putNumber("Encoder Drive Error", error);
       error = error/2000;
+      //if gyro +, speed up north
+      double gyroError = m_drivetrainSubsystem.getValue();
       double southSpeed = speed*-1 - error;
-      m_drivetrainSubsystem.setSpeedsRaw(()->speed,()->0,()->southSpeed,()->0);
+      double northSpeed = speed - gyroError/20;
+      m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->0,()->southSpeed,()->0);
     }
   }
 

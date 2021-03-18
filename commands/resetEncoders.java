@@ -8,15 +8,22 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.omniWheelDriveTrain;
 public class resetEncoders extends CommandBase {
   omniWheelDriveTrain m_DriveTrain;
+  boolean m_resetEnc;
+  boolean m_resetGyro;
   /** Creates a new resetEncoders. */
-  public resetEncoders(omniWheelDriveTrain subsystem) {
+  public resetEncoders(omniWheelDriveTrain subsystem,boolean resetEnc,boolean resetGyro) {
     m_DriveTrain = subsystem;
     addRequirements(m_DriveTrain);
   }
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_DriveTrain.resetEncoders();
+    if(m_resetEnc){
+      m_DriveTrain.resetEncoders();
+    }
+    if(m_resetGyro){
+      m_DriveTrain.resetGyro();
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
