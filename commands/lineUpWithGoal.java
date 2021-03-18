@@ -27,9 +27,10 @@ public class lineUpWithGoal extends CommandBase {
   //NetworkTableInstance.getDefault().getTable("limelight").getEntry("<variablename>").getDouble(0);
 
   /** Creates a new lineUpWithGoal. */
-  public lineUpWithGoal(omniWheelDriveTrain subsystem) {
+  public lineUpWithGoal(omniWheelDriveTrain subsystem,boolean driveToDistance) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_OmniWheelDriveTrain = subsystem;
+    m_DriveToDistance = driveToDistance;
     addRequirements(m_OmniWheelDriveTrain);
   }
 
