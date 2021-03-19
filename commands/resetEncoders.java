@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.omniWheelDriveTrain;
 public class resetEncoders extends CommandBase {
@@ -11,8 +13,10 @@ public class resetEncoders extends CommandBase {
   boolean m_resetEnc;
   boolean m_resetGyro;
   /** Creates a new resetEncoders. */
-  public resetEncoders(omniWheelDriveTrain subsystem,boolean resetEnc,boolean resetGyro) {
+  public resetEncoders(omniWheelDriveTrain subsystem,BooleanSupplier resetEnc,BooleanSupplier resetGyro) {
     m_DriveTrain = subsystem;
+    m_resetGyro = resetGyro.getAsBoolean();
+    m_resetEnc = resetEnc.getAsBoolean();
     addRequirements(m_DriveTrain);
   }
   // Called when the command is initially scheduled.

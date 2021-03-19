@@ -28,17 +28,25 @@ public class driveByEncoders extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    double gyroErrorConstant = 100;
+    double gyroError = m_drivetrainSubsystem.getValue();
+    double gyroErrorRange = 1;
     if(m_angle.getAsDouble() == 90){
       double speed = 0.4;
       double error = m_drivetrainSubsystem.getEncoderDistance(1) - m_drivetrainSubsystem.getEncoderDistance(3);
       SmartDashboard.putNumber("Encoder Drive Error", error);
       error = error/2000;
-      //if gyro +, slow down north
-      double gyroError = m_drivetrainSubsystem.getValue();
-      double southSpeed = speed*-1 - error;
-      double northSpeed = speed - gyroError/20;
-      m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->0,()->southSpeed,()->0);
+      double southSpeed = speed*-1;
+      double northSpeed = speed;
+      double westSpeed;
+      if(gyroError >gyroErrorRange){
+        westSpeed = 0.35;
+      }else if(gyroError < gyroErrorRange * -1){
+        westSpeed = -0.35;
+      }else{
+        westSpeed = 0;
+      }
+      m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->westSpeed,()->southSpeed,()->0);
     }else if(m_angle.getAsDouble() == 180){
       double speed = -0.35;
       double speed2 = 0.35;
@@ -46,33 +54,51 @@ public class driveByEncoders extends CommandBase {
       SmartDashboard.putNumber("Encoder Drive Error", error);
       error = error/1000;
       double eastSpeed = speed2 + error;
-      //Gyro +, west slow down
-      double gyroError = m_drivetrainSubsystem.getValue();
-      double westSpeed = speed + gyroError/20;
-      m_drivetrainSubsystem.setSpeedsRaw(()->0,()->westSpeed,()->0,()->eastSpeed);
+      double westSpeed = speed;
+      double northSpeed;
+      if(gyroError >gyroErrorRange){
+        northSpeed = 0.35;
+      }else if(gyroError < gyroErrorRange * -1){
+        northSpeed = -0.35;
+      }else{
+        northSpeed = 0;
+      }
+      m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->westSpeed,()->0,()->eastSpeed);
     }else if(m_angle.getAsDouble() == 0){
       double speed = 0.35;
       double speed2 = -0.35;
       double error = m_drivetrainSubsystem.getEncoderDistance(2) - m_drivetrainSubsystem.getEncoderDistance(4)*-1;
       SmartDashboard.putNumber("Encoder Drive Error", error);
+      error = error/1000;
       double eastSpeed = speed2 + error;
-      error = error/1000;//Gyro +, west speed up
-      double gyroError = m_drivetrainSubsystem.getValue();
-      double westSpeed = speed + gyroError/20;
-      m_drivetrainSubsystem.setSpeedsRaw(()->0,()->westSpeed,()->0,()->eastSpeed);
+      double westSpeed = speed;
+      double northSpeed;
+      if(gyroError >gyroErrorRange){
+        northSpeed = 0.35;
+      }else if(gyroError < gyroErrorRange * -1){
+        northSpeed = -0.35;
+      }else{
+        northSpeed = 0;
+      }
+      m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->westSpeed,()->0,()->eastSpeed);
     }else if(m_angle.getAsDouble() == 270){
       double speed = -0.35;
       double error = m_drivetrainSubsystem.getEncoderDistance(1) - m_drivetrainSubsystem.getEncoderDistance(3);
       SmartDashboard.putNumber("Encoder Drive Error", error);
       error = error/2000;
-      //if gyro +, speed up north
-      double gyroError = m_drivetrainSubsystem.getValue();
       double southSpeed = speed*-1 - error;
-      double northSpeed = speed - gyroError/20;
-      m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->0,()->southSpeed,()->0);
+      double northSpeed = speed;
+      double westSpeed;
+      if(gyroError >gyroErrorRange){
+        westSpeed = 0.35;
+      }else if(gyroError < gyroErrorRange * -1){
+        westSpeed = -0.35;
+      }else{
+        westSpeed = 0;
+      }
+      m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->westSpeed,()->southSpeed,()->0);
     }
   }
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
@@ -87,7 +113,7 @@ public class driveByEncoders extends CommandBase {
         return true;
       }
     }else if(m_angle.getAsDouble() == 90){
-      if(Math.abs(m_drivetrainSubsystem.getEncoderDistance(1)) >= m_counts.getAsDouble()){
+      if(Math.abs(m_drivetrainSubsystem.getEncoderDistance(3)) >= m_counts.getAsDouble()){
         return true;
       }
     }else if(m_angle.getAsDouble() == 180){
@@ -95,7 +121,7 @@ public class driveByEncoders extends CommandBase {
         return true;
       }
     }else if(m_angle.getAsDouble() == 270){
-      if(Math.abs(m_drivetrainSubsystem.getEncoderDistance(1)) >= m_counts.getAsDouble()){
+      if(Math.abs(m_drivetrainSubsystem.getEncoderDistance(3)) >= m_counts.getAsDouble()){
         return true;
       }
     }
