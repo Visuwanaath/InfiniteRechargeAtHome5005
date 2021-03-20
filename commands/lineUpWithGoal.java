@@ -37,10 +37,10 @@ public class lineUpWithGoal extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    STEER_K = 0.0725;                    // how hard to turn toward the target
+    STEER_K = 0.25;                    // how hard to turn toward the target
     DRIVE_K = 0.07;                    // how hard to drive fwd toward the target
-    MAX_DRIVE = 0.5;                   // Simple speed limit so we don't drive too fast
-    Desired_distance = 84;
+    MAX_DRIVE = 0.4;                   // Simple speed limit so we don't drive too fast
+    Desired_distance = 65;
     EndNow = false;
     TargetDetected = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
     SmartDashboard.putNumber("Desired Distance", Desired_distance);
@@ -56,21 +56,34 @@ public class lineUpWithGoal extends CommandBase {
     if(m_DriveToDistance == false){
       DRIVE_K = 0;
     }
-    actual_Distance = GetDistance(18.2, 89, OffsetY, 27);
+    actual_Distance = GetDistance(18.5, 78, OffsetY, 35);
     SmartDashboard.putNumber("Actual Distance", actual_Distance);
     if(OffsetX != 0){
       steer_cmd = OffsetX * STEER_K;
       drive_cmd = (actual_Distance- Desired_distance) * DRIVE_K;
-    if (drive_cmd > MAX_DRIVE)
+    if (Math.abs(drive_cmd) > MAX_DRIVE)
     {
-      drive_cmd = MAX_DRIVE;
+      if(drive_cmd <0){
+        drive_cmd = MAX_DRIVE * -1;
+      }else{
+        drive_cmd = MAX_DRIVE;
+      }
     }
-    m_OmniWheelDriveTrain.Go(()->drive_cmd,()->steer_cmd, ()->0);
+    if(Math.abs(steer_cmd) > MAX_DRIVE){
+      if(steer_cmd < 0){
+        steer_cmd= MAX_DRIVE * -1;
+      }else{
+        steer_cmd= MAX_DRIVE;
+      }
+    }
+    SmartDashboard.putNumber("Line Up Y", drive_cmd);
+    SmartDashboard.putNumber("Line Up X", steer_cmd);
+    m_OmniWheelDriveTrain.Go(()->steer_cmd,()->drive_cmd, ()->0);
     }else{
-      EndNow = true;
       m_OmniWheelDriveTrain.driveByAngle(()->0, ()->0);
     }
   }else if(TargetDetected == 0){
+    EndNow = true;
     m_OmniWheelDriveTrain.driveByAngle(()->0, ()->0);
   }
 }
@@ -87,6 +100,9 @@ public class lineUpWithGoal extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(EndNow){
+      return true;
+    }
     return false;
   }
 }

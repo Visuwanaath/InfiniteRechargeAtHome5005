@@ -39,11 +39,13 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller2,1).whileHeld(new Shoot(m_shooter,()->1.0));
+    new JoystickButton(controller2,1).whileHeld(new Shoot(m_shooter,()->0.63));
     new JoystickButton(controller2,2).whileHeld(new Feed(m_feeder,()->0.3));
     new JoystickButton(controller2,3).whileHeld(new Load(m_loader,()->1));
-    new JoystickButton(controller2,4).whenReleased(new LoopyCourse(m_omniWheelDriveTrain));
-    new JoystickButton(controller2,5).whileHeld(new rotateToAngle(m_omniWheelDriveTrain, ()->45));
+    //new JoystickButton(controller2,4).whenReleased(new LoopyCourse(m_omniWheelDriveTrain));
+    new JoystickButton(controller2,4).whenReleased(new threeLoopCourse(m_omniWheelDriveTrain));
+    new JoystickButton(controller2,5).whileHeld(new lineUpWithGoal(m_omniWheelDriveTrain, true));
+    //new JoystickButton(controller2,7).whenReleased(new TestCommandGroup(m_omniWheelDriveTrain).withTimeout(10));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

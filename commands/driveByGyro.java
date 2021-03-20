@@ -38,19 +38,19 @@ public class driveByGyro extends CommandBase {
       double northSpeed = speed;
       m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->0,()->southSpeed,()->0);
     }else if(m_angle.getAsDouble() == 180){
-      double speed = -0.35;
-      double speed2 = 0.35;
+      double speed = -0.4;
+      double speed2 = 0.4;
       double eastSpeed = speed2 + gyroError/gyroErrorConstant;
       double westSpeed = speed;
       m_drivetrainSubsystem.setSpeedsRaw(()->0,()->westSpeed,()->0,()->eastSpeed);
     }else if(m_angle.getAsDouble() == 0){
-      double speed = 0.35;
-      double speed2 = -0.35;
+      double speed = 0.4;
+      double speed2 = -0.4;
       double eastSpeed = speed2 + gyroError/gyroErrorConstant;
       double westSpeed = speed;
       m_drivetrainSubsystem.setSpeedsRaw(()->0,()->westSpeed,()->0,()->eastSpeed);
     }else if(m_angle.getAsDouble() == 270){
-      double speed = -0.35;
+      double speed = -0.4;
       double southSpeed = speed*-1 + gyroError/gyroErrorConstant;
       double northSpeed = speed;
       m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->0,()->southSpeed,()->0);
