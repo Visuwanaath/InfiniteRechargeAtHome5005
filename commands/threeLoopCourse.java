@@ -40,7 +40,7 @@ public class threeLoopCourse extends SequentialCommandGroup {
       new resetEncoders(driveTrainSubsystem,()->true,()->false),
       new driveByGyro(driveTrainSubsystem, ()->180, ()->6500,()->0),
       new resetEncoders(driveTrainSubsystem,()->true,()->false),
-      new driveByGyro(driveTrainSubsystem, ()->270, ()->33000,()->-3)
+      new driveByGyro(driveTrainSubsystem, ()->270, ()->38000,()->-3)
       /*new driveByGyro(driveTrainSubsystem, ()->180, ()->7000,()->0),
       new resetEncoders(driveTrainSubsystem,()->true,()->false),
       new driveByGyro(driveTrainSubsystem, ()->270, ()->6000,()->0),

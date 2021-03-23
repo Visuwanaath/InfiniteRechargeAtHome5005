@@ -17,8 +17,8 @@ public final class Constants {
     public static int eastOmniWheelPWM = 5;
     public static int southOmniWheelPWM = 7;
     public static int westOmniWheelPWM = 6;
-    public static int shooterLeft =0;
-    public static int shooterRight =1;
+    public static int shooterLeft =1;
+    public static int shooterRight =0;
     public static int feederPWM = 2;
     public static int loaderPWM = 3;
 }

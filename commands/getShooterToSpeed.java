@@ -4,23 +4,24 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.leftShooter;
 import frc.robot.subsystems.rightShooter;
-public class Shoot extends CommandBase {
-  /** Creates a new Shoot. */
-  private leftShooter m_leftShooter;
-  private rightShooter m_rightShooter;
-  private DoubleSupplier m_speed;
-  public Shoot(leftShooter leftShooter,rightShooter rightShooter,DoubleSupplier speed) {
-    m_leftShooter = leftShooter;
+public class getShooterToSpeed extends CommandBase {
+  rightShooter m_rightShooter;
+  leftShooter m_leftShooter;
+  Boolean m_stopWhenCommandEnds;
+  double m_speed;
+  /** Creates a new getShooterToSpeed. */
+  public getShooterToSpeed(leftShooter leftShooter,rightShooter rightShooter,DoubleSupplier speed, BooleanSupplier stopWhenCommandEnds) {
     m_rightShooter = rightShooter;
-    m_speed = speed;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_rightShooter);
+    m_leftShooter = leftShooter;
+    m_stopWhenCommandEnds = stopWhenCommandEnds.getAsBoolean();
+    m_speed = speed.getAsDouble();
     addRequirements(m_leftShooter);
+    addRequirements(m_rightShooter);
   }
 
   // Called when the command is initially scheduled.
@@ -30,16 +31,23 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_leftShooter.setSpeed(m_speed);
-    double negativeSpeed = m_speed.getAsDouble() * -1;
-    m_rightShooter.setSpeed(()->negativeSpeed);
+    m_rightShooter.setSetpoint(50);
+    m_leftShooter.setSetpoint(-50);
+    if(m_rightShooter.isEnabled() == false){
+      m_rightShooter.enable();
+    }
+    if(m_leftShooter.isEnabled() == false){
+      m_leftShooter.enable();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_leftShooter.setSpeed(()->0);
-    m_rightShooter.setSpeed(()->0);
+    if(m_stopWhenCommandEnds == true){
+      m_leftShooter.disable();
+      m_rightShooter.disable();
+    }
   }
 
   // Returns true when the command should end.

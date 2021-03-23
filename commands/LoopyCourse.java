@@ -17,7 +17,7 @@ public class LoopyCourse extends SequentialCommandGroup {
     addCommands(
       //forward is 90 //forward is 90
       new resetEncoders(driveTrainSubsystem,()->true,()->true),
-      new driveByGyro(driveTrainSubsystem, ()->90, ()->5500,()->0),
+      new driveByGyro(driveTrainSubsystem, ()->90, ()->7500,()->0),
       new resetEncoders(driveTrainSubsystem,()->true,()->false),
       new driveByGyro(driveTrainSubsystem, ()->180, ()->7000,()->0),
       new resetEncoders(driveTrainSubsystem,()->true,()->false),
@@ -33,7 +33,7 @@ public class LoopyCourse extends SequentialCommandGroup {
       new resetEncoders(driveTrainSubsystem,()->true,()->false),
       new driveByGyro(driveTrainSubsystem, ()->0, ()->7000,()->0),
       new resetEncoders(driveTrainSubsystem,()->true,()->false),
-      new driveByGyro(driveTrainSubsystem, ()->270, ()->25000,()->-5),
+      new driveByGyro(driveTrainSubsystem, ()->270, ()->20000,()->-5),
       new resetEncoders(driveTrainSubsystem,()->true,()->false),
       new driveByGyro(driveTrainSubsystem, ()->180, ()->7000,()->0),
       new resetEncoders(driveTrainSubsystem,()->true,()->false),

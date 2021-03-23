@@ -20,13 +20,13 @@ public class omniWheelDriveTrain extends SubsystemBase {
   private Spark south = new Spark(Constants.southOmniWheelPWM);
   private Spark west = new Spark(Constants.westOmniWheelPWM);
   private Encoder northEncoder = new Encoder(0,1);
-  private Encoder eastEncoder = new Encoder(6,7);
+  //private Encoder eastEncoder = new Encoder(6,7);
   private Encoder southEncoder = new Encoder(4,5);
   private Encoder westEncoder = new Encoder(2,3);
   @Override
   public void periodic() {
     SmartDashboard.putNumber("North Wheel", northEncoder.getDistance());
-    SmartDashboard.putNumber("East Wheel", eastEncoder.getDistance());
+    //SmartDashboard.putNumber("East Wheel", eastEncoder.getDistance());
     SmartDashboard.putNumber("South Wheel", southEncoder.getDistance());
     SmartDashboard.putNumber("West Wheel", westEncoder.getDistance());
     SmartDashboard.putNumber("Angle",m_imu.getAngle());
@@ -35,8 +35,8 @@ public class omniWheelDriveTrain extends SubsystemBase {
     int encoderNumber = encoderNumberSupplier;
     if(encoderNumber == 1){
       return northEncoder.getDistance();
-    }else if(encoderNumber == 2){
-      return eastEncoder.getDistance();
+    //}else if(encoderNumber == 2){
+      //return eastEncoder.getDistance();
     }else if(encoderNumber == 3){
       return southEncoder.getDistance();
     }else{
@@ -59,8 +59,8 @@ public class omniWheelDriveTrain extends SubsystemBase {
     int encoderNumber = encoderNumberSupplier;
     if(encoderNumber == 1){
       return northEncoder.getRate();
-    }else if(encoderNumber == 2){
-      return eastEncoder.getRate();
+  //  }else if(encoderNumber == 2){
+//      return eastEncoder.getRate();
     }else if(encoderNumber == 3){
       return southEncoder.getRate();
     }else{
@@ -69,7 +69,7 @@ public class omniWheelDriveTrain extends SubsystemBase {
   }
   public void resetEncoders(){
     northEncoder.reset();
-    eastEncoder.reset();
+    //eastEncoder.reset();
     southEncoder.reset();
     westEncoder.reset();
   }

@@ -20,7 +20,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final omniWheelDriveTrain m_omniWheelDriveTrain = new omniWheelDriveTrain();
-  private final Shooter m_shooter = new Shooter();
+  private final leftShooter m_leftShooter = new leftShooter();
+  private final rightShooter m_rightShooter = new rightShooter();
   private final Feeder m_feeder = new Feeder();
   private final Loader m_loader = new Loader();
   private Joystick controller1 = new Joystick(0);
@@ -39,13 +40,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller2,1).whileHeld(new Shoot(m_shooter,()->0.63));
+    new JoystickButton(controller2,1).whileHeld(new Shoot(m_leftShooter,m_rightShooter,()->0.63));
     new JoystickButton(controller2,2).whileHeld(new Feed(m_feeder,()->0.3));
     new JoystickButton(controller2,3).whileHeld(new Load(m_loader,()->1));
     //new JoystickButton(controller2,4).whenReleased(new LoopyCourse(m_omniWheelDriveTrain));
+    //new JoystickButton(controller2,4).whenReleased(new threeLoopCourse(m_omniWheelDriveTrain));
     new JoystickButton(controller2,4).whenReleased(new threeLoopCourse(m_omniWheelDriveTrain));
-    new JoystickButton(controller2,5).whileHeld(new lineUpWithGoal(m_omniWheelDriveTrain, true));
-    //new JoystickButton(controller2,7).whenReleased(new TestCommandGroup(m_omniWheelDriveTrain).withTimeout(10));
+    //new JoystickButton(controller2,5).whileHeld(new lineUpWithGoal(m_omniWheelDriveTrain, true));
+    new JoystickButton(controller2,5).whileHeld(new getShooterToSpeed(m_leftShooter,m_rightShooter,()->50, ()->true));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
