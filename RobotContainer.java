@@ -40,7 +40,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller2,1).whileHeld(new Shoot(m_leftShooter,m_rightShooter,()->0.63));
+    new JoystickButton(controller2,1).whileHeld(new Shoot(m_leftShooter,m_rightShooter,()->0.-0.55));
     new JoystickButton(controller2,2).whileHeld(new Feed(m_feeder,()->0.3));
     new JoystickButton(controller2,3).whileHeld(new Load(m_loader,()->1));
     //new JoystickButton(controller2,4).whenReleased(new LoopyCourse(m_omniWheelDriveTrain));

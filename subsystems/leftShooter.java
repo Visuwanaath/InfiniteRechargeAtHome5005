@@ -21,7 +21,8 @@ public class leftShooter extends PIDSubsystem {
   public leftShooter() {
     super(
         // The PIDController used by the subsystem
-        new PIDController(0.00472, 0.000,0.0));
+        new PIDController(0.0038, 0.000045,0.0));
+        //I--0.0001
         leftShooterEncoder.setDistancePerPulse(0.001);
         m_controller.setTolerance(0.1);
   }

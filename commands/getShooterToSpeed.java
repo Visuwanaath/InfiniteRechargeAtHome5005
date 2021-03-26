@@ -31,8 +31,8 @@ public class getShooterToSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_rightShooter.setSetpoint(50);
-    m_leftShooter.setSetpoint(-50);
+    m_rightShooter.setSetpoint(64);
+    m_leftShooter.setSetpoint(-64);
     if(m_rightShooter.isEnabled() == false){
       m_rightShooter.enable();
     }
