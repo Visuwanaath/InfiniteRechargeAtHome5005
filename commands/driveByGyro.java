@@ -13,15 +13,24 @@ public class driveByGyro extends CommandBase {
   private DoubleSupplier m_angle;
   private DoubleSupplier m_counts;
   private DoubleSupplier m_gyroAngle;
+  private DoubleSupplier m_speed;
   /** Creates a new driveByGyro. */
   public driveByGyro(omniWheelDriveTrain subsystem, DoubleSupplier angle,DoubleSupplier counts,DoubleSupplier gyroAngle) {
     m_drivetrainSubsystem = subsystem;
     m_angle = angle;
     m_counts = counts;
     m_gyroAngle = gyroAngle;
+    m_speed = ()->0.45;
     addRequirements(m_drivetrainSubsystem);
   }
-
+  public driveByGyro(omniWheelDriveTrain subsystem, DoubleSupplier angle,DoubleSupplier counts,DoubleSupplier gyroAngle,DoubleSupplier speed) {
+    m_drivetrainSubsystem = subsystem;
+    m_angle = angle;
+    m_counts = counts;
+    m_gyroAngle = gyroAngle;
+    m_speed = speed;
+    addRequirements(m_drivetrainSubsystem);
+  }
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -33,24 +42,24 @@ public class driveByGyro extends CommandBase {
     double gyroError = m_drivetrainSubsystem.getValue() - m_gyroAngle.getAsDouble();
     double gyroErrorRange = 1;
     if(m_angle.getAsDouble() == 90){
-      double speed = 0.4;
+      double speed = m_speed.getAsDouble();
       double southSpeed = speed*-1 + gyroError/gyroErrorConstant;
       double northSpeed = speed;
       m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->0,()->southSpeed,()->0);
     }else if(m_angle.getAsDouble() == 180){
-      double speed = -0.4;
-      double speed2 = 0.4;
+      double speed = m_speed.getAsDouble() * -1;
+      double speed2 = m_speed.getAsDouble();
       double eastSpeed = speed2 + gyroError/gyroErrorConstant;
       double westSpeed = speed;
       m_drivetrainSubsystem.setSpeedsRaw(()->0,()->westSpeed,()->0,()->eastSpeed);
     }else if(m_angle.getAsDouble() == 0){
-      double speed = 0.4;
-      double speed2 = -0.4;
+      double speed = m_speed.getAsDouble();
+      double speed2 = m_speed.getAsDouble() * -1;
       double eastSpeed = speed2 + gyroError/gyroErrorConstant;
       double westSpeed = speed;
       m_drivetrainSubsystem.setSpeedsRaw(()->0,()->westSpeed,()->0,()->eastSpeed);
     }else if(m_angle.getAsDouble() == 270){
-      double speed = -0.4;
+      double speed = m_speed.getAsDouble() *-1;
       double southSpeed = speed*-1 + gyroError/gyroErrorConstant;
       double northSpeed = speed;
       m_drivetrainSubsystem.setSpeedsRaw(()->northSpeed,()->0,()->southSpeed,()->0);

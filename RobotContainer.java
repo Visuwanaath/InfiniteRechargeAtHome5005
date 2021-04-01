@@ -27,6 +27,8 @@ public class RobotContainer {
   private Joystick controller1 = new Joystick(0);
   private Joystick controller2 = new Joystick(1);
   private final Command eightCourse =new LoopyCourse(m_omniWheelDriveTrain);
+  private final Command hitCourse = new hitThreeObstaclesCourse(m_omniWheelDriveTrain);
+  private final Command threeLoopCourse = new threeLoopCourse(m_omniWheelDriveTrain);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -40,14 +42,19 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(controller2,1).whileHeld(new Shoot(m_leftShooter,m_rightShooter,()->0.-0.55));
+    new JoystickButton(controller2,1).whileHeld(new Shoot(m_leftShooter,m_rightShooter,()->controller1.getRawAxis(3)));
     new JoystickButton(controller2,2).whileHeld(new Feed(m_feeder,()->0.3));
     new JoystickButton(controller2,3).whileHeld(new Load(m_loader,()->1));
     //new JoystickButton(controller2,4).whenReleased(new LoopyCourse(m_omniWheelDriveTrain));
     //new JoystickButton(controller2,4).whenReleased(new threeLoopCourse(m_omniWheelDriveTrain));
-    new JoystickButton(controller2,4).whenReleased(new threeLoopCourse(m_omniWheelDriveTrain));
+    new JoystickButton(controller2,4).whenReleased(new hitThreeObstaclesCourse(m_omniWheelDriveTrain));
     //new JoystickButton(controller2,5).whileHeld(new lineUpWithGoal(m_omniWheelDriveTrain, true));
-    new JoystickButton(controller2,5).whileHeld(new getShooterToSpeed(m_leftShooter,m_rightShooter,()->50, ()->true));
+    //new JoystickButton(controller2,5).whileHeld(new getShooterToSpeed(m_leftShooter,m_rightShooter,()->50, ()->true));
+    new JoystickButton(controller2,8).whileHeld(new driveByGyro(m_omniWheelDriveTrain, ()->180,()-> 400000, ()->0, ()->0.8));
+    new JoystickButton(controller2,9).whileHeld(new driveByGyro(m_omniWheelDriveTrain, ()->0,()-> 400000, ()->0, ()->0.8));
+    new JoystickButton(controller2,6).whileHeld(new driveByGyro(m_omniWheelDriveTrain, ()->90,()-> 400000, ()->0, ()->0.8));
+    new JoystickButton(controller2,7).whileHeld(new driveByGyro(m_omniWheelDriveTrain, ()->270,()-> 400000, ()->0, ()->0.8));
+    new JoystickButton(controller2,5).whileHeld(new resetEncoders(m_omniWheelDriveTrain, ()->true, ()->false));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -55,6 +62,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return eightCourse;
+    return threeLoopCourse;
   }
 }
