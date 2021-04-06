@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.omniWheelDriveTrain;
 import java.util.function.DoubleSupplier;
@@ -27,10 +28,11 @@ public class rotateToAngle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    SmartDashboard.putString("Angle Changing", "Running");
     if(m_drivetrainSubsystem.getValue() < m_angle.getAsDouble() -1){
-      m_drivetrainSubsystem.rotate(()->-0.2);
+      m_drivetrainSubsystem.rotate(()->-0.25);
     }else if(m_drivetrainSubsystem.getValue() > m_angle.getAsDouble() +1){
-      m_drivetrainSubsystem.rotate(()->0.2);
+      m_drivetrainSubsystem.rotate(()->0.25);
     }else{
       endNow = true;
     }

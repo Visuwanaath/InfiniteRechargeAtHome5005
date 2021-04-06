@@ -71,10 +71,15 @@ public class lineUpWithGoal extends CommandBase {
     }
     if(Math.abs(steer_cmd) > MAX_DRIVE){
       if(steer_cmd < 0){
-        steer_cmd= MAX_DRIVE * -1;
+        //steer_cmd= MAX_DRIVE * -1;
+        steer_cmd = -0.7;
       }else{
-        steer_cmd= MAX_DRIVE;
+        //steer_cmd= MAX_DRIVE;
+        steer_cmd = 0.7;
       }
+    }
+    if(m_DriveToDistance == false){
+      drive_cmd = 0.1;
     }
     SmartDashboard.putNumber("Line Up Y", drive_cmd);
     SmartDashboard.putNumber("Line Up X", steer_cmd);
